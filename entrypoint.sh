@@ -1,5 +1,5 @@
 #!/bin/sh
-TESTFILE_PATH=$3
+testFilePath=$3
 
 echo "Using Test File Path $testFilePath"
 
@@ -28,25 +28,11 @@ status=0
 if [[ $testFilePath== *.jmx ]]
 then
   echo "Single file specified so only running one test"
-  echo "Running jmeter -n -t $TESTFILE_PATH $@"
-  jmeter -n -t $TESTFILE_PATH $@
+  echo "Running jmeter -n -t $testFilePath $@"
+  jmeter -n -t $testFilePath $@
   status=$?
 else
-  BASEFILE_PATH=$(basename $testFilePath)
   echo "Folder specified - Running each JMX File In Folder"
-  for FILE in $(find $BASEFILE_PATH -name '*.jmx')
-  do
-    echo "Running test with $FILE"
-    jmeter -n -t $FILE $@
-    test_run=$?
-    # If any of the previous tests haven't failed
-    if [ "$test_run" == "0" ] && [ "$status" == "1" ]
-    then
-      status=1 # Set one of the tests failing
-    fi
-    echo "Test $FILE has exited with status code $test_run"
-  done
-fi
 
 error=0 # Default error status code
 
