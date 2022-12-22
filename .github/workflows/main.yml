@@ -10,11 +10,11 @@ jobs:
       - name: Run JMeter Tests
         uses: ./
         with:
-          test-plan-path: ./TestPlans/S01_SimpleExample/S01_SimpleExample.jmx
+          testFilePath: ./TestPlans/S01_SimpleExample/S01_SimpleExample.jmx
           args: ""
           
       - name: Upload Results
         uses: actions/upload-artifact@v2
         with:
           name: jmeter-results
-          path: result.jtl
+          path: reports/
