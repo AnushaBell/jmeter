@@ -1,7 +1,7 @@
 #!/bin/sh
 TESTFILE_PATH=$3
 
-echo "Using Test File Path $TESTFILE_PATH"
+echo "Using Test File Path $testFilePath"
 
 # Removing first 3 arguments from Entrypoint. Need to find a better way to do this
 set -- "${@:1:0}" "${@:2}"
@@ -25,14 +25,14 @@ fi
 
 status=0
 
-if [[ $TESTFILE_PATH == *.jmx ]]
+if [[ $testFilePath== *.jmx ]]
 then
   echo "Single file specified so only running one test"
   echo "Running jmeter -n -t $TESTFILE_PATH $@"
   jmeter -n -t $TESTFILE_PATH $@
   status=$?
 else
-  BASEFILE_PATH=$(basename $TESTFILE_PATH)
+  BASEFILE_PATH=$(basename $testFilePath)
   echo "Folder specified - Running each JMX File In Folder"
   for FILE in $(find $BASEFILE_PATH -name '*.jmx')
   do
